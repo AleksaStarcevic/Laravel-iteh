@@ -8,6 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Ad extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'id',
+        'naslov',
+        'cena',
+        'opis',
+        'pregledi',
+        'type_id',
+        'user_id'
+    ];
 
     public function type()
     {
