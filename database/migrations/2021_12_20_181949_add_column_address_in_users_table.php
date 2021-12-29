@@ -14,7 +14,7 @@ class AddColumnAddressInUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('address');
+            $table->string('address')->default('Beograd');
         });
     }
 

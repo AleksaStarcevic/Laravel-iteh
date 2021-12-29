@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdController;
+use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -28,4 +29,17 @@ Route::get('/ads/{id}', [AdController::class, 'show']);
 Route::post('/ads', [AdController::class, 'store']);
 Route::delete('/ads/{id}', [AdController::class, 'destroy']);
 Route::patch('/ads/{id}', [AdController::class, 'update']);
-Route::resource('ads', AdController::class);
+
+
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('/profile', function (Request $request) {
+        return auth()->user();
+    });
+    Route::resource('ads', AdController::class)->only(['update', 'store', 'destroy']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+});
+
+Route::resource('ads', AdController::class)->only(['index']);
